@@ -1,0 +1,37 @@
+local part = script.Parent
+
+local pop = Instance.new("Sound")
+pop.SoundId = "rbxassetid://9117187844"
+pop.Parent = part
+
+local destino = workspace.ObbyStructure:WaitForChild("TeleportDestino")
+
+part.Touched:Connect(function(hit)
+	local humanoid = hit.Parent:FindFirstChild("Humanoid")
+	local root = hit.Parent:FindFirstChild("HumanoidRootPart")
+
+	if humanoid then
+		part.BrickColor = BrickColor.Random()
+		pop:Play()
+
+		-- VERMELHO → morre
+		if part.BrickColor == BrickColor.new("Really red") then
+			humanoid.Health = 0
+			print("vermeio")
+			-- AMARELO → some
+		elseif part.BrickColor == BrickColor.new("Bright yellow") then
+			print("marelo")
+			task.wait(0.5)
+			part.Transparency = 1
+			part.CanCollide = false
+
+			task.wait(3)
+
+			part.Transparency = 0
+			part.CanCollide = true
+		elseif part.BrickColor == BrickColor.new("Royal purple") then
+			print("roxu")
+			root.CFrame = destino.CFrame == Vector3.new(0,3,0)
+		end
+	end
+end)
